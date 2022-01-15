@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Sleep</title>
+  </head>
+  <body>
+    <form><input type="text" id="num" /> <input type="submit" /></form>
+    <h1></h1>
+    <script>
+      var submit = document.querySelector("form");
+      submit.addEventListener("submit", display);
+      function sleep(num) {
+        return new Promise((resolve, reject) => {
+          if (parseInt(num) != num || num < 0) {
+            return reject({
+              success: false,
+              message: "Invalid argument, promise accepts only valid numbers",
+            });
+          }
+          setTimeout(() => {
+            resolve({
+              success: true,
+              message: "Success",
+            });
+          }, num);
+        });
+      }
+      function display(e) {
+        var num = document.getElementById("num").value;
+        console.log(num);
+        e.preventDefault();
+        var msg = sleep(Number(num))
+          .then(function (res) {
+            document.querySelector("h1").textContent = res.message;
+          })
+          .catch((res) => {
+            document.querySelector("h1").textContent = res.message;
+          });
+      }
+    </script>
+  </body>
+</html>
